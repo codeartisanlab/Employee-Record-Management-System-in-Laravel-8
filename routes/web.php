@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DepartmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('admin/login',[AdminController::class,'login']);
+Route::get('admin',[AdminController::class,'index']);
+Route::post('admin/login',[AdminController::class,'submit_login']);
+Route::get('admin/logout',[AdminController::class,'logout']);
+
+// Department Resource
+Route::resource('depart',DepartmentController::class);
