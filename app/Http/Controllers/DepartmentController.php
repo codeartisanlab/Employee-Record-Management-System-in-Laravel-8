@@ -55,7 +55,8 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        return view('department.show');
+        $data=Department::find($id);
+        return view('department.show',['data'=>$data]);
     }
 
     /**
@@ -66,7 +67,8 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        return view('department.edit');
+        $data=Department::find($id);
+        return view('department.edit',['data'=>$data]);
     }
 
     /**
@@ -78,7 +80,15 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title'=>'required'
+        ]);
+
+        $data=Department::find($id);
+        $data->title=$request->title;
+        $data->save();
+
+        return redirect('depart/'.$id.'/edit')->with('msg','Data has been updated');
     }
 
     /**
@@ -89,6 +99,7 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Department::where('id',$id)->delete();
+        return redirect('depart');
     }
 }

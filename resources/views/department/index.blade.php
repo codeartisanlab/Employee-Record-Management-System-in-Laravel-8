@@ -13,12 +13,14 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Title</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
                                             <th>Title</th>
+                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -27,6 +29,11 @@
 	                                        <tr>
 	                                            <td>{{$d->id}}</td>
 	                                            <td>{{$d->title}}</td>
+                                                <td>
+                                                    <a href="{{url('depart/'.$d->id)}}" class="btn btn-warning btn-sm">Show</a>
+                                                    <a href="{{url('depart/'.$d->id.'/edit')}}" class="btn btn-info btn-sm">Update</a>
+                                                    <a onclick="return confirm('Are you sure to delete this data?')" href="{{url('depart/'.$d->id.'/delete')}}" class="btn btn-danger btn-sm">Delete</a>
+                                                </td>
 	                                        </tr>
 	                                        @endforeach
                                         @endif

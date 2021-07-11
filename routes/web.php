@@ -24,4 +24,5 @@ Route::post('admin/login',[AdminController::class,'submit_login']);
 Route::get('admin/logout',[AdminController::class,'logout']);
 
 // Department Resource
+Route::get('depart/{id}/delete',[DepartmentController::class,'destroy']);
 Route::resource('depart',DepartmentController::class);

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','All Departments')
+@section('title','Add Department')
 @section('content')
 <div class="card mb-4 mt-4">
     <div class="card-header">
