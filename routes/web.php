@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeContoller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,3 +27,7 @@ Route::get('admin/logout',[AdminController::class,'logout']);
 // Department Resource
 Route::get('depart/{id}/delete',[DepartmentController::class,'destroy']);
 Route::resource('depart',DepartmentController::class);
+
+// Employee Resource
+Route::get('employee/{id}/delete',[EmployeeContoller::class,'destroy']);
+Route::resource('employee',EmployeeContoller::class);
