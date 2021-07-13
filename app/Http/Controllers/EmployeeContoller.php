@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Department;
 use App\Models\Employee;
 class EmployeeContoller extends Controller
 {
@@ -24,7 +25,8 @@ class EmployeeContoller extends Controller
      */
     public function create()
     {
-        //
+        $data=Department::orderBy('id','desc')->get();
+        return view('employee.create',['departments'=>$data]);
     }
 
     /**
@@ -35,7 +37,29 @@ class EmployeeContoller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'full_name'=>'required',
+            'photo'=>'required|image|mimes:jpg,png,gif',
+            'address'=>'required',
+            'mobile'=>'required',
+            'status'=>'required',
+        ]);
+
+        $photo=$request->file('photo');
+        $renamePhoto=time().'.'.$photo->getClientOriginalExtension();
+        $dest=public_path('/images');
+        $photo->move($dest,$renamePhoto);
+
+        $data=new Employee();
+        $data->department_id=$request->depart;
+        $data->full_name=$request->full_name;
+        $data->photo=$renamePhoto;
+        $data->address=$request->address;
+        $data->mobile=$request->mobile;
+        $data->status=$request->status;
+        $data->save();
+
+        return redirect('employee/create')->with('msg','Data has been submitted');
     }
 
     /**
@@ -46,7 +70,8 @@ class EmployeeContoller extends Controller
      */
     public function show($id)
     {
-        //
+        $data=Employee::find($id);
+        return view('employee.show',['data'=>$data]);
     }
 
     /**
@@ -57,7 +82,9 @@ class EmployeeContoller extends Controller
      */
     public function edit($id)
     {
-        //
+        $departs=Department::orderBy('id','desc')->get();
+        $data=Employee::find($id);
+        return view('employee.edit',['departs'=>$departs,'data'=>$data]);
     }
 
     /**
@@ -69,7 +96,33 @@ class EmployeeContoller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'full_name'=>'required',
+            'address'=>'required',
+            'mobile'=>'required',
+            'status'=>'required',
+        ]);
+
+
+        if($request->hasFile('photo')){
+            $photo=$request->file('photo');
+            $renamePhoto=time().'.'.$photo->getClientOriginalExtension();
+            $dest=public_path('/images');
+            $photo->move($dest,$renamePhoto);
+        }else{
+            $renamePhoto=$request->prev_photo;
+        }
+
+        $data=Employee::find($id);
+        $data->department_id=$request->depart;
+        $data->full_name=$request->full_name;
+        $data->photo=$renamePhoto;
+        $data->address=$request->address;
+        $data->mobile=$request->mobile;
+        $data->status=$request->status;
+        $data->save();
+
+        return redirect('employee/'.$id.'/edit')->with('msg','Data has been submitted');
     }
 
     /**
@@ -80,6 +133,7 @@ class EmployeeContoller extends Controller
      */
     public function destroy($id)
     {
-        //
+        Employee::where('id',$id)->delete();
+        return redirect('employee');
     }
 }

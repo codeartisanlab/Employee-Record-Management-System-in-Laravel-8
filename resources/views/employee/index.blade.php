@@ -5,7 +5,7 @@
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 All Employees
-                                <a href="{{url('depart/create')}}" class="float-end btn btn-sm btn-success">Add New</a>
+                                <a href="{{url('employee/create')}}" class="float-end btn btn-sm btn-success">Add New</a>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple" class="table table-bordered">
@@ -14,6 +14,7 @@
                                             <th>#</th>
                                             <th>Department</th>
                                             <th>Full</th>
+                                            <th>Photo</th>
                                             <th>Address</th>
                                             <th>Action</th>
                                         </tr>
@@ -23,6 +24,7 @@
                                             <th>#</th>
                                             <th>Department</th>
                                             <th>Full</th>
+                                            <th>Photo</th>
                                             <th>Address</th>
                                             <th>Action</th>
                                         </tr>
@@ -34,11 +36,12 @@
 	                                            <td>{{$d->id}}</td>
 	                                            <td>{{$d->department->title}}</td>
                                                 <td>{{$d->full_name}}</td>
+                                                <td><img src="{{asset('public/images/'.$d->photo)}}" width="80" /></td>
                                                 <td>{{$d->address}}</td>
                                                 <td>
-                                                    <a href="{{url('depart/'.$d->id)}}" class="btn btn-warning btn-sm">Show</a>
-                                                    <a href="{{url('depart/'.$d->id.'/edit')}}" class="btn btn-info btn-sm">Update</a>
-                                                    <a onclick="return confirm('Are you sure to delete this data?')" href="{{url('depart/'.$d->id.'/delete')}}" class="btn btn-danger btn-sm">Delete</a>
+                                                    <a href="{{url('employee/'.$d->id)}}" class="btn btn-warning btn-sm">Show</a>
+                                                    <a href="{{url('employee/'.$d->id.'/edit')}}" class="btn btn-info btn-sm">Update</a>
+                                                    <a onclick="return confirm('Are you sure to delete this data?')" href="{{url('employee/'.$d->id.'/delete')}}" class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
 	                                        </tr>
 	                                        @endforeach
